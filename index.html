@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#090d1d" />
+    <meta name="description" content="Ruota il mappamondo interattivo e scopri Paesi e continenti." />
+    <title>Atlante del mondo — Esplora il mappamondo</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="wordmark" href="#" aria-label="Pagina iniziale dell'Atlante del mondo">
+        <span class="wordmark-icon" aria-hidden="true">◉</span>
+        <span>ATLANTE<span class="wordmark-light">DEL MONDO</span></span>
+      </a>
+      <nav class="top-nav" aria-label="Navigazione principale">
+        <a class="active" href="#explore">Esplora</a>
+        <a href="#continents">Continenti</a>
+        <a href="#about">Informazioni</a>
+      </nav>
+      <div class="topbar-tag"><span></span> MAPPAMONDO INTERATTIVO</div>
+    </header>
+
+    <main class="page" id="explore">
+      <section class="intro">
+        <div>
+          <p class="eyebrow"><span class="eyebrow-line"></span> UN MONDO DA SCOPRIRE</p>
+          <h1>Un pianeta.<br /><span>Infinite storie.</span></h1>
+          <p class="intro-copy">Fai ruotare la Terra. Scegli un Paese o un continente per scoprire le persone, i luoghi e le caratteristiche che lo rendono unico.</p>
+        </div>
+        <div class="intro-stats" aria-label="Panoramica del mondo">
+          <div><strong id="globalPopulation">8,0 mld</strong><span>persone sulla Terra</span></div>
+          <i></i>
+          <div><strong id="globalPlaces">7</strong><span>continenti da esplorare</span></div>
+        </div>
+      </section>
+
+      <section class="explorer-layout" aria-label="Esploratore interattivo del mondo">
+        <article class="globe-card">
+          <div class="globe-card-head">
+            <div>
+              <p class="card-eyebrow">IL PIANETA VIVENTE</p>
+              <h2>Esplora il mappamondo</h2>
+            </div>
+            <div class="globe-controls" aria-label="Controlli del mappamondo">
+              <button id="rotateButton" class="control-button rotate-control" type="button" aria-pressed="false" title="Attiva o ferma la rotazione automatica">
+                <span aria-hidden="true">↻</span><span id="rotateLabel">Auto</span>
+              </button>
+              <button id="zoomOut" class="control-button zoom-control" type="button" aria-label="Riduci lo zoom" title="Riduci lo zoom">−</button>
+              <button id="zoomIn" class="control-button zoom-control" type="button" aria-label="Aumenta lo zoom" title="Aumenta lo zoom">+</button>
+              <button id="resetGlobe" class="control-button reset-control" type="button" aria-label="Ripristina la vista del globo" title="Ripristina la vista del globo">⌂</button>
+            </div>
+          </div>
+
+          <div class="globe-stage" id="globeStage">
+            <div class="star-field" aria-hidden="true"></div>
+            <svg id="globeSvg" viewBox="0 0 720 640" role="img" aria-label="Mappamondo tridimensionale interattivo. Trascina per ruotare e seleziona un Paese.">
+              <defs>
+                <radialGradient id="oceanGradient" cx="34%" cy="28%" r="74%">
+                  <stop offset="0%" stop-color="#3484c9" />
+                  <stop offset="55%" stop-color="#15509b" />
+                  <stop offset="100%" stop-color="#092047" />
+                </radialGradient>
+                <radialGradient id="globeShade" cx="34%" cy="28%" r="75%">
+                  <stop offset="40%" stop-color="#07142d" stop-opacity="0" />
+                  <stop offset="100%" stop-color="#05091c" stop-opacity=".68" />
+                </radialGradient>
+                <filter id="globeGlow" x="-35%" y="-35%" width="170%" height="170%">
+                  <feGaussianBlur stdDeviation="13" />
+                </filter>
+                <clipPath id="globeClip"><circle cx="360" cy="320" r="248" /></clipPath>
+              </defs>
+              <circle class="globe-halo" cx="360" cy="320" r="263" />
+              <g id="globeLayer"></g>
+            </svg>
+            <div class="globe-overlay">
+              <span class="drag-indicator" aria-hidden="true">⤧</span>
+              <span>TRASCINA PER RUOTARE</span>
+              <span class="overlay-divider"></span>
+              <span>CLICCA SU UN PAESE</span>
+            </div>
+            <div class="globe-coordinates" aria-hidden="true">TERRA · 3D</div>
+          </div>
+
+          <div class="globe-legend" aria-label="Colori dei continenti">
+            <span><i class="legend-africa"></i>Africa</span>
+            <span><i class="legend-asia"></i>Asia</span>
+            <span><i class="legend-europe"></i>Europa</span>
+            <span><i class="legend-americas"></i>Americhe</span>
+            <span><i class="legend-oceania"></i>Oceania</span>
+          </div>
+        </article>
+
+        <aside class="explore-panel" id="continents">
+          <div class="panel-heading">
+            <div>
+            <p class="card-eyebrow">LA TUA PROSSIMA META</p>
+            <h2>Scopri un luogo</h2>
+            </div>
+            <span class="compass-mark" aria-hidden="true">✳</span>
+          </div>
+          <p class="panel-intro">Scegli un continente o seleziona un Paese sul mappamondo.</p>
+
+          <div class="continent-picker" id="continentPicker" role="group" aria-label="Scegli un continente">
+            <button type="button" class="continent-chip" data-continent="Africa"><i></i>Africa</button>
+            <button type="button" class="continent-chip" data-continent="Asia"><i></i>Asia</button>
+            <button type="button" class="continent-chip" data-continent="Europe"><i></i>Europa</button>
+            <button type="button" class="continent-chip" data-continent="North America"><i></i>America del Nord</button>
+            <button type="button" class="continent-chip" data-continent="South America"><i></i>America del Sud</button>
+            <button type="button" class="continent-chip" data-continent="Oceania"><i></i>Oceania</button>
+            <button type="button" class="continent-chip" data-continent="Antarctica"><i></i>Antartide</button>
+          </div>
+
+          <div class="place-detail" id="placeDetail" aria-live="polite">
+            <div class="detail-placeholder">
+              <span class="placeholder-globe" aria-hidden="true">🌐</span>
+              <h3>Il mondo ti aspetta.</h3>
+              <p>Seleziona un Paese o un continente per scoprirne il profilo, la popolazione e molto altro.</p>
+            </div>
+          </div>
+
+          <div class="panel-footnote">
+            <span class="footnote-icon" aria-hidden="true">i</span>
+            <p>Le schede includono stime sulla popolazione, sull'economia e sulla fascia di reddito.</p>
+          </div>
+        </aside>
+      </section>
+
+      <section class="bottom-strip">
+        <div class="bottom-icon" aria-hidden="true">✦</div>
+        <div><strong>La curiosità non ha confini.</strong><span>Continua a esplorare: ogni rotazione rivela una nuova prospettiva.</span></div>
+        <a href="#explore" class="back-to-globe">TORNA AL GLOBO <span aria-hidden="true">↑</span></a>
+      </section>
+
+      <footer class="page-footer" id="about">
+        <span>ATLANTE DEL MONDO <i>·</i> PER CHI È CURIOSO</span>
+        <span>Confini e dati geografici: <a href="https://github.com/nvkelso/natural-earth-vector" target="_blank" rel="noreferrer">Natural Earth</a> · Dominio pubblico</span>
+      </footer>
+    </main>
+
+    <script src="assets/d3.min.js"></script>
+    <script src="assets/world-countries.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
