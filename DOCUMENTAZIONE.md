@@ -55,6 +55,10 @@ I pulsanti permettono di selezionare Africa, Asia, Europa, America del Nord, Ame
 | `assets/world-countries.js` | Dataset locale con 242 geometrie geografiche e proprietà di Paesi e territori. |
 | `assets/d3.min.js` | Distribuzione locale di D3.js 7.9.0, usata per la proiezione e le interazioni geografiche. |
 | `assets/D3-LICENSE.txt` | Testo della licenza di D3.js. |
+| `Dockerfile` | Crea un'immagine web basata su Nginx e copia nell'immagine i file statici dell'app. |
+| `compose.yaml` | Configura la build e pubblica il servizio solo sull'interfaccia locale del computer. |
+| `avvia-app.bat` | Avvia il servizio con Docker Compose, attende che risponda e apre il browser. |
+| `.dockerignore` | Esclude dal contesto Docker il repository Git e lo screenshot presente nella cartella. |
 
 ### Disegno del globo
 
@@ -94,19 +98,17 @@ Quando la storia è disponibile, la scheda collega la voce di Wikipedia e la lic
 
 ## Avvio in locale su Windows
 
-Aprire PowerShell e avviare un server HTTP statico dalla cartella del progetto:
+È necessario avere Docker Desktop installato e avviato. Il metodo più semplice è fare doppio clic su `avvia-app.bat` nella cartella del progetto. Il launcher:
 
-```powershell
-Set-Location "C:\Users\lucai\Desktop\SERF"
-py -m http.server 5173
+- costruisce l'immagine Docker, se necessario;
+- avvia il servizio web con Docker Compose;
+- attende che la pagina risponda e apre [http://localhost:8080/](http://localhost:8080/) nel browser.
+
+Per avviare o arrestare il servizio manualmente, aprire PowerShell nella cartella del progetto ed eseguire:
+
+```text
+docker compose up -d --build
+docker compose down
 ```
 
-Aprire quindi [http://127.0.0.1:5173/](http://127.0.0.1:5173/) nel browser. Per arrestare il server, tornare alla finestra di PowerShell e premere `Ctrl+C`.
-
-Se la porta `5173` è già occupata, scegliere un’altra porta, ad esempio:
-
-```powershell
-py -m http.server 8000
-```
-
-In questo caso l’indirizzo sarà [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
+L'applicazione è disponibile solo dal computer locale sulla porta `8080`. Il primo avvio può richiedere una connessione Internet per scaricare l'immagine Nginx. Se Docker non è avviato, il launcher mostra un messaggio: avviare Docker Desktop e riprovare.
